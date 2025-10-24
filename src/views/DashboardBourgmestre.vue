@@ -3,7 +3,7 @@
     <!-- Navbar -->
     <header class="navbar">
       <div class="navbar-left">
-        <img src="../assets/RobustCodelogowhite.png" alt="Logo RDC" class="logo" />
+        <img src="../assets/RobustCodelogowhite.png" alt="Logo BE" class="logo" />
         <h1>Bourgmestre - Tableau de bord</h1>
       </div>
       <div class="navbar-right">
@@ -46,6 +46,10 @@
           <h3>{{ stats.totalAgents }}</h3>
           <p>Agents</p>
         </div>
+        <div class="card">
+          <h3>{{ stats.totalCitoyens }}</h3>
+          <p>Citoyens</p>
+        </div>
       </section>
     </main>
   </div>
@@ -66,6 +70,7 @@ export default {
         demandesEnTraitement: 0,
         demandesValidees: 0,
         totalAgents: 0,
+        totalCitoyens: 0,
       },
     };
   },
@@ -76,12 +81,22 @@ export default {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          "http://localhost:4001/api/dashboard/bourgmestre",
+          "https://be-solution-backend.onrender.com/api/dashboard/bourgmestre",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        this.stats = res.data;
+
+        // ✅ Mise à jour des statistiques reçues
+        this.stats = {
+          ...this.stats,
+          totalDemandes: res.data.totalDemandes || 0,
+          demandesSoumises: res.data.demandesSoumises || 0,
+          demandesEnTraitement: res.data.demandesEnTraitement || 0,
+          demandesValidees: res.data.demandesValidees || 0,
+          totalAgents: res.data.totalAgents || 0,
+          totalCitoyens: res.data.totalCitoyens || 0,
+        };
       } catch (err) {
         console.error("Erreur chargement stats bourgmestre", err);
         this.error = "Impossible de charger les statistiques.";
@@ -90,9 +105,9 @@ export default {
       }
     },
     logout() {
-      localStorage.removeItem('token');
-      window.location.href = '/';
-    }
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    },
   },
   async mounted() {
     await this.fetchStats();
@@ -103,7 +118,7 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Inter&family=Ysabeau+Office&display=swap');
 
-/* Navbar */
+/* --- NAVBAR --- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -152,12 +167,11 @@ export default {
   font-weight: bold;
   font-family: 'Inter', sans-serif;
 }
-
 .logout-btn:hover {
   background-color: #e03e3e;
 }
 
-/* Contenu principal */
+/* --- CONTENU --- */
 .content {
   padding: 30px;
   font-family: 'ABeeZee', sans-serif;
@@ -172,12 +186,13 @@ export default {
   font-family: 'Ysabeau Office', sans-serif;
 }
 
-/* Cards */
+/* --- CARTES --- */
 .cards {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
   margin-top: 10px;
+  justify-content: center;
 }
 .card {
   background: #fff;
@@ -204,10 +219,10 @@ export default {
   font-weight: 500;
 }
 
-/* Messages */
+/* --- ÉTATS --- */
 .loading {
   font-size: 18px;
-  color: #333;
+  color: #104B71;
 }
 .error {
   font-size: 16px;

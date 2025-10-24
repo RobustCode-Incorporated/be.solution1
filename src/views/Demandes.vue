@@ -3,7 +3,7 @@
     <!-- Navbar -->
     <header class="navbar">
       <div class="navbar-left">
-        <img src="../assets/logo_rdc.png" alt="Logo RDC" class="logo" />
+        <img src="../assets/RobustCodelogowhite.png" alt="Logo BE" class="logo" />
         <h1>Gestion des Demandes</h1>
       </div>
       <div class="navbar-right">
@@ -52,7 +52,7 @@
             </td>
             <td>
               <a v-if="demande.documentPath"
-                 :href="`http://localhost:4001/documents/${demande.documentPath}`"
+                 :href="`https://be-solution-backend.onrender.com/documents/${demande.documentPath}`"
                  target="_blank"
                  class="document-link-cell">
                 📥 Voir
@@ -104,7 +104,7 @@ export default {
       this.loading = true;
       try {
         const token = localStorage.getItem("token");
-        let url = "http://localhost:4001/api/demandes";
+        let url = "https://be-solution-backend.onrender.com/api/demandes";
         if (this.filtreStatut) {
           url += `?statut=${this.filtreStatut}`;
         }
@@ -123,7 +123,7 @@ export default {
         try {
           const token = localStorage.getItem("token");
           await axios.put(
-            `http://localhost:4001/api/demandes/${id}/validate-document`,
+            `https://be-solution-backend.onrender.com/api/demandes/${id}/validate-document`,
             {},
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -179,6 +179,8 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Inter&family=Ysabeau+Office&display=swap');
+
 /* Navbar */
 .navbar {
   display: flex;
@@ -216,11 +218,12 @@ export default {
 /* Filtres */
 .filters {
   margin: 20px 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .filters label {
   font-weight: bold;
   margin-right: 10px;
+  color: #0E2C5A;
 }
 .filters select {
   padding: 6px;
@@ -233,7 +236,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
-  font-family: "Roboto", sans-serif;
+  font-family: "ABeeZee", sans-serif;
 }
 th,
 td {
@@ -258,7 +261,7 @@ button {
   cursor: pointer;
 }
 button:hover {
-  background: #0E2C5A;
+  background: #104B71;
 }
 .validate-btn {
   background: #28a745;
@@ -270,7 +273,7 @@ button:hover {
   background: #0E2C5A;
 }
 .view-btn:hover {
-  background: #0E2C5A;
+  background: #104B71;
 }
 
 /* Badges Statuts */
@@ -296,7 +299,7 @@ button:hover {
 
 /* Document link */
 .document-link-cell {
-  background: #0E2C5A;
+  background: #104B71;
   color: white;
   padding: 5px 8px;
   border-radius: 4px;
@@ -305,8 +308,8 @@ button:hover {
 .document-link-cell:hover {
   background: #0E2C5A;
 }
-</style>
 
+/* Logout */
 .logout-btn {
   background-color: #FF4C4C;
   color: white;
@@ -320,3 +323,4 @@ button:hover {
 .logout-btn:hover {
   background-color: #e03e3e;
 }
+</style>

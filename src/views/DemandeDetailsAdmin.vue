@@ -3,7 +3,7 @@
     <!-- Navbar -->
     <header class="navbar">
       <div class="navbar-left">
-        <img src="../assets/RobustCodelogowhite.png" alt="Logo RDC" class="logo" />
+        <img src="../assets/RobustCodelogowhite.png" alt="Logo BE" class="logo" />
         <h1>Détails de la Demande</h1>
       </div>
       <div class="navbar-right">
@@ -55,7 +55,7 @@
 
           <a 
             v-if="demande.documentPath"
-            :href="`http://localhost:4001/documents/${demande.documentPath.split('/').pop()}`"
+            :href="`https://be-solution-backend.onrender.com/documents/${demande.documentPath.split('/').pop()}`"
             target="_blank"
             class="view-document-link">
             📥 Voir le Document
@@ -91,9 +91,12 @@ export default {
       try {
         const id = this.$route.params.id;
         const token = localStorage.getItem("token");
-        const res = await axios.get(`http://localhost:4001/api/demandes/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `https://be-solution-backend.onrender.com/api/demandes/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         this.demande = res.data;
       } catch (error) {
         console.error("Erreur chargement des détails:", error);
@@ -108,14 +111,14 @@ export default {
         const id = this.$route.params.id;
         const token = localStorage.getItem("token");
         const res = await axios.put(
-          `http://localhost:4001/api/demandes/${id}/validate-document`,
+          `https://be-solution-backend.onrender.com/api/demandes/${id}/validate-document`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         alert(res.data.message);
-        await this.fetchDemandeDetails();
+        await this.fetchDemandeDetails(); // Recharge les données à jour
       } catch (error) {
         console.error("Erreur de validation:", error.response?.data || error.message);
         alert("Erreur lors de la validation et de la signature du document.");

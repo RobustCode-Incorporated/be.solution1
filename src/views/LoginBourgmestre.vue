@@ -49,19 +49,21 @@ export default {
       this.error = null;
       try {
         const res = await axios.post(
-          "http://localhost:4001/api/administrateurs/login",
+          "https://be-solution-backend.onrender.com/api/administrateurs/login",
           {
             username: this.username,
             password: this.password,
           }
         );
 
+        // Sauvegarder le token dans le stockage local
         localStorage.setItem("token", res.data.token);
 
+        // Redirection vers le tableau de bord
         this.$router.push("/dashboard-bourgmestre");
       } catch (err) {
         console.error("Erreur connexion bourgmestre :", err);
-        this.error = err.response?.data?.message || "Connexion échouée";
+        this.error = err.response?.data?.message || "Connexion échouée. Vérifiez vos identifiants.";
       } finally {
         this.loading = false;
       }
@@ -90,7 +92,6 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: 'ABeeZee', sans-serif;
 }
 
 .logo {
@@ -113,7 +114,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   padding: 0 80px;
-  font-family: 'ABeeZee', sans-serif;
 }
 
 .form-title {
@@ -134,7 +134,6 @@ export default {
   margin-bottom: 6px;
   display: block;
   color: #333;
-  font-family: 'ABeeZee', sans-serif;
 }
 
 .login-form input {
@@ -144,7 +143,6 @@ export default {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  font-family: 'ABeeZee', sans-serif;
   font-size: 15px;
   transition: border-color 0.3s;
 }
