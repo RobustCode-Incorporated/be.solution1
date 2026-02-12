@@ -69,7 +69,7 @@
           <select v-model="form.typeDemande" required>
             <option disabled value="">-- Sélectionner --</option>
             <option value="carte_identite">Carte d'identité</option>
-            <option value="acte_naissance">Acte de naissance</option>
+            <option value="acte_naissance">Annexe 26</option>
             <option value="acte_mariage">Acte de mariage</option>
             <option value="acte_residence">Acte de résidence</option>
           </select>
